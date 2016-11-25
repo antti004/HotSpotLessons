@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <title>internet hotspot > login</title>
@@ -33,7 +32,8 @@ $(if chap-id)
 	//-->
 	</script>
 $(endif)
-
+<div class="container">
+	<div class="row">
 	<form name="login" action="$(link-login-only)" method="post"
 					    $(if chap-id) onSubmit="return doLogin()" $(endif)>
 						<input type="hidden" name="dst" value="$(link-orig)" />
@@ -52,7 +52,12 @@ $(endif)
 							</table>
 					</form>
 
-
+	</div>
+</div>
+<div class="row">
+<table id="tb" class="table table-condensed">
+</table>
+</div>
 
 	$(if error)<br /><div style="color: #FF8080; font-size: 9px">$(error)</div>$(endif)
 
@@ -63,8 +68,67 @@ $(endif)
 </script>
   	<script type="text/javascript" src="contents/jquery-3.1.1.min.js"></script>
   	<script type="text/javascript" src="contents/bootstrap.min.js"></script>
+<!--	<script type="text/javascript" src="contents/sheetrock.min.js"></script> -->
+	<script type="text/javascript" src="contents/jquery-google-sheet-to-json.min.js"></script>
+<script>
+  var spreadSheet='https://docs.google.com/spreadsheets/d/1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic/edit?gid=0';
+/*
+ $('#tb').sheetrock({
+	 url :spreadSheet,
+	 query:"select A,B",
+	 fetchSize:10
+ });
+*/
+ var _sheet = '1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic';
+ _sheet='https://docs.google.com/spreadsheets/d/1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic/edit?usp=sharing';
+_sheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUn19xp32d1Dgll7tf2Ibeca1dSYE7WZmdJbVv6Ius5zzL_tBjLDrnvFxA7LEuIUSXmt5llaEzA3ke/pubhtml';
+  //  var sheet='https://docs.google.com/spreadsheets/d/1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic/edit?gid=0';
+var _sheet_id='2PACX-1vSUn19xp32d1Dgll7tf2Ibeca1dSYE7WZmdJbVv6Ius5zzL_tBjLDrnvFxA7LEuIUSXmt5llaEzA3ke';
+/*
+$(document).ready(function(){
+ 
+    // use your spreadsheet id here 
+   
+    $.googleSheetToJSON(sheet)
+        .done(function(rows){
+            // each row is a row of data from the spreadsheet 
+            console.log(rows);
+        })
+        .fail(function(err){
+            console.log('error!', err);
+        });
+    });
+*/
+$(document).ready(function(){
+
+	var worksheets = [
+		'', // defaults to first worksheet without id
+		'ouab0ad'];
+
+	worksheets.forEach(function(worksheet){
+ 		$.googleSheetToJSON(_sheet_id, worksheet)
+			.done(function(rows){
+
+				var $container = $('<div>');
+				$container.append('<h1>' + (worksheet || 'default') + '</h1>');
+				rows.forEach(function(row){
+					$dl = $('<dl>');
+					Object.getOwnPropertyNames(row).forEach(function(name){
+						var val = [].concat(row[name]).join(' / ');
+						$dl.append('<dt>' + name + '</dt><dd>' + val + '</dd>');
+					});
+					$container.append($dl);
+				});
+				$(document.body).append($container);
+			})
+			.fail(function(err){
+				console.log('error!', err);
+			});
+	});
+});
 
 
+</script>
 </body>
 </html>
 
