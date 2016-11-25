@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+<body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script src="contents/jquery-google-sheet-to-json.min.js"></script>
+<script>
+$(document).ready(function(){
+
+    // use your spreadsheet id here
+    var _ID = '1nmrLOKhY_XB9vYgr-8xYTQ7dAB7AykY9G-UolHvcit0';
+    _ID ='2PACX-1vSUn19xp32d1Dgll7tf2Ibeca1dSYE7WZmdJbVv6Ius5zzL_tBjLDrnvFxA7LEuIUSXmt5llaEzA3ke';
+    _ID='1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic';
+
+    $.googleSheetToJSON(_ID)
+        .done(function(rows){
+            console.debug(rows);
+            rows.forEach(function(row){
+             console.debug(row);
+
+            });
+            // each row is a row of data from the spreadsheet
+/*            $(document).append(rows);
+                var $container = $('<div>');
+				$container.append('<h1>' +  'default' + '</h1>');
+				rows.forEach(function(row){
+					$dl = $('<dl>');
+					Object.getOwnPropertyNames(row).forEach(function(name){
+						var val = [].concat(row[name]).join(' / ');
+						$dl.append('<dt>' + name + '</dt><dd>' + val + '</dd>');
+					});
+					$container.append($dl);
+				});
+				$(document.body).append($container);
+*/
+        })
+        .fail(function(err){
+            console.log('error!', err);
+        });
+    });
+</script>
+</body>
+</html>

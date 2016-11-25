@@ -80,16 +80,14 @@ $(endif)
  });
 */
  var _sheet = '1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic';
- _sheet='https://docs.google.com/spreadsheets/d/1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic/edit?usp=sharing';
-_sheet = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUn19xp32d1Dgll7tf2Ibeca1dSYE7WZmdJbVv6Ius5zzL_tBjLDrnvFxA7LEuIUSXmt5llaEzA3ke/pubhtml';
-  //  var sheet='https://docs.google.com/spreadsheets/d/1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic/edit?gid=0';
-var _sheet_id='2PACX-1vSUn19xp32d1Dgll7tf2Ibeca1dSYE7WZmdJbVv6Ius5zzL_tBjLDrnvFxA7LEuIUSXmt5llaEzA3ke';
-/*
+     _sheet = 'https://docs.google.com/spreadsheets/d/1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic';
+var _sheet_id = '1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic';
+
 $(document).ready(function(){
  
     // use your spreadsheet id here 
    
-    $.googleSheetToJSON(sheet)
+    $.googleSheetToJSON(_sheet)
         .done(function(rows){
             // each row is a row of data from the spreadsheet 
             console.log(rows);
@@ -98,7 +96,7 @@ $(document).ready(function(){
             console.log('error!', err);
         });
     });
-*/
+
 $(document).ready(function(){
 
 	var worksheets = [
