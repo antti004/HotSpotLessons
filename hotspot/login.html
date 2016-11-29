@@ -11,8 +11,8 @@
 $(if chap-id)
 
 	<form name="sendin" action="$(link-login-only)" method="post">
-		<input type="hidden" name="username" value="$(mac)"/>
-		<input type="hidden" name="password" />
+		<input type="hidden" name="username" value="test"/>
+		<input type="hidden" name="password" value=""/>
 		<input type="hidden" name="dst" value="$(link-orig)" />
 		<input type="hidden" name="popup" value="false" />
 		<input type="hidden" name="mac" value="$(mac)">
@@ -103,8 +103,8 @@ function sheetResponse(error,options,response)
 function doLogin() {
 	
 //   		document.sendin.password.value = hexMD5('$(chap-id)' + '$(chap-challenge)');
-		document.sendin.username.value = "$(mac)";
-   		document.sendin.password.value = hexMD5('$(chap-id)' + "" + '$(chap-challenge)');
+	//	document.sendin.username.value = "$(mac)";
+   		document.sendin.password.value = hexMD5('$(chap-id)' + "test" + '$(chap-challenge)');
 
 		document.sendin.submit();
 	return false;
