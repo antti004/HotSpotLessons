@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>internet hotspot > login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<link rel="stylesheet" href="contents/bootstrap/bootstrap.min.css" >
+</head>
+<body>
+$(if chap-id)
+
+	<form name="sendin" action="$(link-login-only)" method="post">
+		<input type="hidden" name="username" value="$(mac)"/>
+		<input type="hidden" name="password" />
+		<input type="hidden" name="dst" value="$(link-orig)" />
+		<input type="hidden" name="popup" value="false" />
+		<input type="hidden" name="mac" value="$(mac)">
+		<input type="hidden" name="ip" value="$(ip)">
+	</form>
+	
+	<script type="text/javascript" src="contents/md5.js"></script>
+$(endif)
+<div class="container" id="lesson">
+	<div class="col-sm-5">
+			<div class="form-group">
+				<label for="txtExercise">Ülesanne</label>
+				<input type="text" class="form-control input-lg" readonly name="txtExercise">
+			</div>
+			<div class="form-group">
+				<label for="txtAnswer">Vastus</label>
+				<input type="text" class="form-control input-lg" name="txtAnswer">
+			</div>
+			<div class="form-group">
+			<button class="btn btn-success btn-lg" id="btnCheck">Vasta</button>
+			<span class="text-danger hidden" id="txtInfo" style="margin-left:20px"><b>Vale vastus!</b></span>
+		</div>
+			
+	</div>
+</div>
+
+	$(if error)<br /><div style="color: #FF8080; font-size: 9px">$(error)</div>$(endif)
+
+<script type="text/javascript" src="contents/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="contents/bootstrap.min.js"></script>
+<script type="text/javascript" src="contents/sheetrock.min.js"></script>
+
+<script>
+var _sheet1='https://docs.google.com/spreadsheets/d/1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic';
+var _sheet1_id='1SzHcxwbOTigtNLwZAX9Pt5beYRIL1pKVTjsNVy0BNic';
+_sheet1 = _sheet1+'/edit#gid=0';
+var _exercice="";
+var _answer="";
+
+$("#lesson #btnCheck").on("click",function(){
+	var userAnswer = $('#lesson input[name="txtAnswer"]').val();
+	console.debug(userAnswer);
+	userAnswer = userAnswer.trim().toLowerCase();
+    console.debug(userAnswer+" = "+_answer);
+	if(userAnswer === _answer)
+	{
+		doLogin();
+	}else{
+		 $('#lesson input[name="txtAnswer"]').val("");
+		 $('#lesson span#txtInfo').removeClass("hidden");
+		 
+		console.debug("WRONG");
+	}
+});
+
+$(document).ready(function(){
+	console.debug("MAC = "+"$(mac)");
+	var iRnd=Math.floor((Math.random() * 31) + 3);
+
+     sheetrock({
+         callback:function(error,options,response){
+             console.debug(error);
+             console.debug(options);
+             console.debug(response);   
+         }
+     });
+     console.debug("Random = "+iRnd);
+	sheetrock({
+		url: _sheet1,
+		query:"select B,C,A where A = " + iRnd,
+		chunkSize:4,
+		callback:sheetResponse
+	});
+
+	// set focus for answer input
+   $("#lesson input[name='txtAnswer']").focus();
+});
+
+function sheetResponse(error,options,response)
+{
+	console.debug(error);
+    console.debug(response);
+	_exercice=response.rows[1].cells["Tehe"];
+	_answer=response.rows[1].cells["Vastus"].toLowerCase();
+	$("#lesson input[name='txtExercise']").val(_exercice);
+}
+
+function doLogin() {
+	
+//   		document.sendin.password.value = hexMD5('$(chap-id)' + '$(chap-challenge)');
+		document.sendin.username.value = "$(mac)";
+   		document.sendin.password.value = hexMD5('$(chap-id)' + "" + '$(chap-challenge)');
+
+		document.sendin.submit();
+	return false;
+}
+
+
+
+</script>
+</body>
+</html>
+
+
